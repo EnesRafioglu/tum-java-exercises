@@ -1,0 +1,46 @@
+package de.tum.cit.aet.pse;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+/**
+ * MeteorologicalFileStorage can save the meteorological data to a text file
+ */
+//TODO 2: Create interface IMeteorologicalFileStorage and make this class implement it
+//Note: the interface should include the same method signatures as the ones below
+
+public class MeteorologicalFileStorage implements IMeteorologicalFileStorage {
+    private int temperature;
+    private int windspeed;
+    private int humidity;
+
+    public void setTemperature(int temperature) {
+        this.temperature = temperature;
+    }
+
+    public void setWindspeed(int windspeed) {
+        this.windspeed = windspeed;
+    }
+
+    public void setHumidity(int humidity) {
+        this.humidity = humidity;
+    }
+
+    public void save() throws IOException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmm");
+        String datestring = formatter.format(new Date());
+        Path file = Path.of(datestring + ".txt");
+        String output = temperature + "\n" + windspeed + "\n" + humidity + "\n";
+        // check if file exists, if yes, append to the file
+        if (Files.exists(file)) {
+            Files.writeString(file, output, StandardCharsets.UTF_8, StandardOpenOption.APPEND);
+        } else {
+            Files.writeString(file, output, StandardCharsets.UTF_8, StandardOpenOption.CREATE);
+        }
+    }
+}

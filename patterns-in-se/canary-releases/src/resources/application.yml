@@ -1,0 +1,20 @@
+server:
+  port: 8080
+
+---
+# stable profile
+spring:
+  config:
+    activate:
+      on-profile: stable
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: canary
+
+
+
+# TODO

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenView Recommendations</title>
+    <style>
+        /* General page styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* Welcome message styles */
+        #welcome-message {
+            font-size: 2rem;
+            color: #4c95af;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Recommendations header */
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* Recommendations list styles */
+        ul {
+            list-style: none;
+            padding: 0;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        ul li {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 5px 0;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Error message styles */
+        #error-message {
+            color: red;
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        async function loadRecommendations() {
+            try {
+                const response = await fetch('/api/recommendations');
+                if (!response.ok) throw new Error('Failed to fetch recommendations');
+
+                const data = await response.json();
+
+                // Update the welcome message
+                document.getElementById('welcome-message').textContent = data.message;
+
+                // Generate recommendation list
+                document.getElementById('recommendations-list').innerHTML =
+                    data.recommendations.map(rec => `<li>${rec}</li>`).join('');
+            } catch (error) {
+                console.error('Error loading recommendations:', error);
+                document.getElementById('welcome-message').textContent = 'Error loading data';
+                document.getElementById('error-message').textContent = 'Please try again later.';
+            }
+        }
+
+        window.onload = loadRecommendations;
+    </script>
+</head>
+<body>
+<h1 id="welcome-message">Loading...</h1>
+<h2>Your Recommendations:</h2>
+<ul id="recommendations-list"></ul>
+<p id="error-message"></p>
+</body>
+</html>

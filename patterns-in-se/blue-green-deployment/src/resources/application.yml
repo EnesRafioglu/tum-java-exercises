@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    default: blue
+
+---
+# blue profile
+spring:
+  config:
+    activate:
+      on-profile: blue
+
+app:
+  message: Welcome to TUMflix!
+
+---
+spring:
+  config:
+    activate:
+      on-profile: green
+
+app:
+  message: Welcome to TUMflix! Now with AI-Powered Recommendations!

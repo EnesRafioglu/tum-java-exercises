@@ -1,0 +1,3 @@
+rootProject.name = 'W10E02--Decentralized-ID-Generation'
+include 'DroidFactoryService'
+
